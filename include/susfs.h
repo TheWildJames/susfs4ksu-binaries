@@ -40,6 +40,7 @@
 #define CMD_SUSFS_SET_ANDROID_DATA_ROOT_PATH     0x55551
 #define CMD_SUSFS_SET_SDCARD_ROOT_PATH           0x55552
 #define CMD_SUSFS_ADD_SUS_PATH_LOOP              0x55553
+#define CMD_SUSFS_SET_SUS_PATH_UID_FILTER        0x55554 /* branch tip after v2.4.0 */
 #define CMD_SUSFS_ADD_SUS_MOUNT                  0x55560
 #define CMD_SUSFS_HIDE_SUS_MNTS                  0x55561  /* all_procs pre-v2, non_su_procs in v2 */
 #define CMD_SUSFS_UMOUNT_FOR_ZYGOTE_ISO_SERVICE  0x55562
@@ -359,6 +360,11 @@ struct st_susfs_priority_uid_filter {
 	int                     err;
 };
 
+struct st_susfs_sus_path_uid_filter {
+	char                    app_strings[APP_STR_BUF_SIZE];
+	int                     err;
+};
+
 
 /***************************
  ** Low-level IPC helpers **
@@ -445,5 +451,6 @@ int cmd_enable_avc_log_spoofing(int enabled);
 int cmd_show(const char *what);
 int cmd_sus_su(const char *arg);
 int set_priority_uid_filter(const char *pkgname);
+int set_sus_path_uid_filter(const char *app_strings);
 
 #endif /* KSU_SUSFS_H */

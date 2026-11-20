@@ -1,5 +1,8 @@
 name: build susfs_userspace
 
+permissions:
+  contents: write
+
 on:
   push:
   workflow_dispatch:

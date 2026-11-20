@@ -852,3 +852,29 @@ int set_priority_uid_filter(const char *pkgname) {
 	ret = info.err;
 	return ret;
 }
+
+/* ------------------------------------------------------------------ */
+/* sus_path_uid_filter (branch tip after v2.4.0)                      */
+/* ------------------------------------------------------------------ */
+
+int set_sus_path_uid_filter(const char *app_strings) {
+	struct st_susfs_sus_path_uid_filter info = {0};
+	int ret;
+
+	if (*app_strings == '\0') {
+		printf("[-] arg is empty'\n");
+		return 1;
+	}
+
+	if (strlen(app_strings) >= APP_STR_BUF_SIZE) {
+		printf("[-] the app package names are too long, the maximum length is %d\n", APP_STR_BUF_SIZE - 1);
+		return 1;
+	}
+
+	strncpy(info.app_strings, app_strings, APP_STR_BUF_SIZE-1);
+	info.err = ERR_v2000_CMD_NOT_SUPPORTED;
+	v2000_cmd(CMD_SUSFS_SET_SUS_PATH_UID_FILTER, &info);
+	prt_not_supported(CMD_SUSFS_SET_SUS_PATH_UID_FILTER, info.err);
+	ret = info.err;
+	return ret;
+}
